@@ -1,17 +1,23 @@
+#include <stdlib.h>
 #include "binary_trees.h"
 
 /**
- * binary_tree_postorder - function that creates a binary tree node
- * @tree: pointer to the parent node of the node to create
- * @func: pointer of function
- * Return: pointer to the new node, or NULL on failure
+ * binary_tree_postorder - transversal inorder
+ * @tree: pointer to tree to print
+ * @func: function that prints
+ *
+ * Return: nothing just prints
  */
+
 void binary_tree_postorder(const binary_tree_t *tree, void (*func)(int))
 {
-	if (tree == NULL || func == NULL)
-		return;
+	const binary_tree_t *ptr = tree;
 
-	binary_tree_postorder(tree->left, func);
-	binary_tree_postorder(tree->right, func);
-	func(tree->n);
+	if (ptr == NULL || func == NULL)
+		return;
+	if (ptr->left != NULL)
+		binary_tree_postorder(ptr->left, func);
+	if (ptr->right != NULL)
+		binary_tree_postorder(ptr->right, func);
+	func(ptr->n);
 }

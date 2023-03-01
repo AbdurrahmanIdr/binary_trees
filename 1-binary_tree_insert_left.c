@@ -1,32 +1,39 @@
+#include <stdlib.h>
 #include "binary_trees.h"
 
 /**
- * binary_tree_insert_left - function that creates a binary tree node
- * @parent: pointer to the parent node of the node to create
- * @value: value to put in the new node
- * Return: pointer to the new node, or NULL on failure
+ * binary_tree_insert_left - insert to the left of the tree
+ * @parent: parent node
+ * @value: value to insert
+ *
+ * Return: pointer to the creted node
  */
+
 binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value)
 {
-	binary_tree_t *nodo = NULL;
+	binary_tree_t *ptr = NULL;
+
+	ptr = malloc(sizeof(binary_tree_t));
+	if (ptr == NULL)
+		return (NULL);
+	ptr->parent = parent;
+	ptr->n = value;
+	ptr->left = NULL;
+	ptr->right = NULL;
 
 	if (parent == NULL)
-		return (NULL);
-
-	nodo = binary_tree_node(parent, value);
-	if (nodo == NULL)
-		return (NULL);
-
-	if (parent->left == NULL)
 	{
-		parent->left = nodo;
+		free(ptr);
+		return (NULL);
 	}
+	if (parent->left == NULL)
+		parent->left = ptr;
 	else
 	{
-		nodo->left = parent->left;
-		parent->left = nodo;
-		nodo->left->parent = nodo;
+		parent->left->parent = ptr;
+		ptr->left = parent->left;
+		parent->left = ptr;
 	}
 
-	return (nodo);
+	return (ptr);
 }
